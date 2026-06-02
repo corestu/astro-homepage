@@ -1,0 +1,25 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { siteConfig } from "../config/site";
+
+type Props = {
+  title?: string;
+  description?: string;
+  currentPath: string;
+};
+
+const {
+  title = siteConfig.meta.title,
+  description = siteConfig.meta.description,
+  currentPath
+} = Astro.props;
+const { meta, brand, nav, intro, footer } = siteConfig;
+---
+
+<BaseLayout title={title} description={description} favicon={meta.favicon}>
+  <SiteHeader brand={brand} nav={nav} intro={intro} currentPath={currentPath} />
+  <slot />
+  <SiteFooter brand={brand} footer={footer} />
+</BaseLayout>

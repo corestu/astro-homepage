@@ -1,0 +1,188 @@
+---
+import type { NavItem } from "../config/site";
+
+type Brand = {
+  logoMark: string;
+  logoText: string;
+  logoImage?: string;
+  logoAlt?: string;
+};
+
+type Intro = {
+  avatar: string;
+  avatarAlt: string;
+  name: string;
+  signature: string;
+};
+
+type Props = {
+  brand: Brand;
+  nav: NavItem[];
+  intro: Intro;
+  currentPath: string;
+};
+
+const { brand, nav, intro, currentPath } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-logo" href="/" aria-label="返回首页">
+      {
+        brand.logoImage ? (
+          <img class="logo-image" src={brand.logoImage} alt={brand.logoAlt ?? brand.logoText} />
+        ) : (
+          <>
+            <span class="logo-mark">{brand.logoMark}</span>
+            <span class="logo-text">{brand.logoText}</span>
+          </>
+        )
+      }
+    </a>
+
+    <nav class="site-nav" aria-label="主导航">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={["nav-link", { "is-active": item.activeMatch === currentPath }]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="site-tools" aria-label="页面工具">
+      <button class="tool-button tool-button-theme" type="button" aria-label="切换黑夜模式" data-theme-toggle>
+        <span class="tool-icon tool-icon-theme" aria-hidden="true"></span>
+      </button>
+
+      <button class="tool-button tool-button-menu" type="button" aria-label="打开菜单">
+        <span class="tool-icon tool-icon-menu" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu-backdrop" data-menu-close></div>
+  <aside class="mobile-menu-drawer" aria-label="移动端菜单">
+    <div class="mobile-menu-handle" aria-hidden="true"></div>
+    <div class="mobile-menu-profile">
+      <img class="mobile-menu-avatar" src={intro.avatar} alt={intro.avatarAlt} />
+      <div class="mobile-menu-meta">
+        <p class="mobile-menu-name">{intro.name}</p>
+        <p class="mobile-menu-signature">{intro.signature}</p>
+      </div>
+    </div>
+    <nav class="mobile-menu-nav" aria-label="移动端主导航">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={["mobile-menu-link", { "is-active": item.activeMatch === currentPath }]}
+            data-menu-link
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </aside>
+</header>
+
+<script is:inline>
+  (() => {
+    if (window.__siteHeaderScrollBound) return;
+    window.__siteHeaderScrollBound = true;
+
+    const syncHeaderState = () => {
+      document.documentElement.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+    document.addEventListener("astro:page-load", syncHeaderState);
+    syncHeaderState();
+
+    const storageKey = "site-theme";
+    let isMenuOpen = false;
+
+    const applyTheme = (theme) => {
+      if (typeof window.__applySiteTheme === "function") {
+        window.__applySiteTheme(theme);
+        return;
+      }
+
+      document.documentElement.dataset.theme = theme;
+    };
+
+    const runThemeTransition = (callback) => {
+      if (typeof document.startViewTransition === "function") {
+        document.startViewTransition(() => {
+          callback();
+        });
+        return;
+      }
+
+      callback();
+    };
+
+    const syncMenuState = (open) => {
+      isMenuOpen = open;
+      document.documentElement.classList.toggle("menu-open", open);
+    };
+
+    const bindMobileMenu = () => {
+      document.querySelectorAll(".tool-button-menu").forEach((button) => {
+        if (button.dataset.menuBound === "true") return;
+        button.dataset.menuBound = "true";
+        button.addEventListener("click", () => {
+          syncMenuState(!isMenuOpen);
+        });
+      });
+
+      document.querySelectorAll("[data-menu-close]").forEach((node) => {
+        if (node.dataset.menuCloseBound === "true") return;
+        node.dataset.menuCloseBound = "true";
+        node.addEventListener("click", () => {
+          syncMenuState(false);
+        });
+      });
+
+      document.querySelectorAll("[data-menu-link]").forEach((link) => {
+        if (link.dataset.menuLinkBound === "true") return;
+        link.dataset.menuLinkBound = "true";
+        link.addEventListener("click", () => {
+          syncMenuState(false);
+        });
+      });
+    };
+
+    const bindThemeToggle = () => {
+      document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+        if (button.dataset.themeBound === "true") return;
+        button.dataset.themeBound = "true";
+        button.addEventListener("click", () => {
+          const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          runThemeTransition(() => {
+            localStorage.setItem(storageKey, nextTheme);
+            applyTheme(nextTheme);
+          });
+        });
+      });
+    };
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        syncMenuState(false);
+      }
+    });
+
+    document.addEventListener("astro:page-load", bindThemeToggle);
+    document.addEventListener("astro:page-load", bindMobileMenu);
+    document.addEventListener("astro:before-preparation", () => {
+      syncMenuState(false);
+    });
+    bindThemeToggle();
+    bindMobileMenu();
+  })();
+</script>

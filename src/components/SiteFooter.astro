@@ -1,0 +1,42 @@
+---
+type Brand = {
+  logoMark: string;
+  logoText: string;
+  logoImage?: string;
+  logoAlt?: string;
+};
+
+type FooterData = {
+  signature: string;
+  copyright: string;
+};
+
+type Props = {
+  brand: Brand;
+  footer: FooterData;
+};
+
+const { brand, footer } = Astro.props;
+---
+
+<footer class="site-footer" aria-label="页脚">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="site-logo footer-logo" href="/" aria-label="返回首页">
+        {
+          brand.logoImage ? (
+            <img class="logo-image" src={brand.logoImage} alt={brand.logoAlt ?? brand.logoText} />
+          ) : (
+            <>
+              <span class="logo-mark">{brand.logoMark}</span>
+              <span class="logo-text">{brand.logoText}</span>
+            </>
+          )
+        }
+      </a>
+      <p class="footer-signature">{footer.signature}</p>
+    </div>
+
+    <p class="footer-copy">{footer.copyright}</p>
+  </div>
+</footer>

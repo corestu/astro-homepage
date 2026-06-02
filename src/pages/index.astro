@@ -1,0 +1,164 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { siteConfig } from "../config/site";
+import { loadFeedPosts } from "../lib/rss";
+
+const { meta, intro, latestPosts, featuredPosts, projects, sites } = siteConfig;
+const latestPostItems = await loadFeedPosts(latestPosts.feed, latestPosts.fallbackItems);
+---
+
+<SiteLayout title={meta.title} description={meta.description} currentPath="/">
+  <main class="page-main">
+    <section class="intro-section" id="home" aria-labelledby="intro-title">
+      <article class="intro-card">
+        <div class="intro-profile">
+          <div class="avatar-wrap">
+            <img class="avatar-image" src={intro.avatar} alt={intro.avatarAlt} />
+            <span class="avatar-status" aria-label="在线中"></span>
+          </div>
+
+          <div class="intro-heading">
+            <p class="intro-greeting" id="intro-title">
+              {intro.greetingPrefix}<span class="intro-name">{intro.name}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="intro-copy" id="about">
+          <p>{intro.bio}</p>
+        </div>
+
+        <div class="contact-group" id="contact" aria-label="联系组件">
+          {
+            intro.contacts.map((item) =>
+              item.type === "link" ? (
+                <a class="contact-button" href={item.href} target="_blank" rel="noreferrer">
+                  {item.label}
+                </a>
+              ) : (
+                <div class="contact-popover">
+                  <button class="contact-button" type="button" aria-label={item.tip}>
+                    {item.label}
+                  </button>
+                  <div class="contact-popover-panel">
+                    <p class="contact-popover-tip">{item.tip}</p>
+                    {
+                      item.qrImage ? (
+                        <img
+                          class="contact-popover-qr"
+                          src={item.qrImage}
+                          alt={item.qrAlt ?? `${item.label} 二维码`}
+                        />
+                      ) : (
+                        <div class="contact-popover-placeholder">等待放入二维码</div>
+                      )
+                    }
+                  </div>
+                </div>
+              )
+            )
+          }
+        </div>
+      </article>
+    </section>
+
+    <section class="posts-section anchor-section" id="posts" aria-labelledby="posts-title">
+      <div class="section-heading">
+        <h2 class="section-title" id="posts-title">{latestPosts.title}</h2>
+        <a class="section-more" href={latestPosts.moreHref} target="_blank" rel="noreferrer">
+          {latestPosts.moreText}
+        </a>
+      </div>
+
+      <div class="post-list" role="list">
+        {
+          latestPostItems.map((item) => (
+            <a class="post-item" href={item.href} role="listitem" target="_blank" rel="noreferrer">
+              <span class="post-main">
+                <span class="post-title">{item.title}</span>
+                <span class="post-tag">#{item.category}</span>
+              </span>
+              <time class="post-date" datetime={item.datetime}>{item.date}</time>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="posts-section featured-section anchor-section" id="featured" aria-labelledby="featured-title">
+      <div class="section-heading">
+        <h2 class="section-title" id="featured-title">{featuredPosts.title}</h2>
+      </div>
+
+      <div class="post-list" role="list">
+        {
+          featuredPosts.items.map((item) => (
+            <a class="post-item" href={item.href} role="listitem" target="_blank" rel="noreferrer">
+              <span class="post-main">
+                <span class="post-title">{item.title}</span>
+                <span class="post-tag">#{item.category}</span>
+              </span>
+              <time class="post-date" datetime={item.datetime}>{item.date}</time>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="projects-section anchor-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading projects-heading">
+        <div>
+          <h2 class="section-title" id="projects-title">{projects.title}</h2>
+          <p class="section-desc">{projects.description}</p>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        {
+          projects.items.map((item) =>
+            item.href ? (
+              <a class="project-card" href={item.href} target="_blank" rel="noreferrer">
+                <p class="project-tag">{item.type}</p>
+                <h3 class="project-title">{item.title}</h3>
+                <p class="project-copy">{item.description}</p>
+              </a>
+            ) : (
+              <article class="project-card">
+                <p class="project-tag">{item.type}</p>
+                <h3 class="project-title">{item.title}</h3>
+                <p class="project-copy">{item.description}</p>
+              </article>
+            )
+          )
+        }
+      </div>
+    </section>
+
+    <section class="sites-section anchor-section" id="sites" aria-labelledby="sites-title">
+      <div class="section-heading sites-heading">
+        <div>
+          <h2 class="section-title" id="sites-title">{sites.title}</h2>
+        </div>
+      </div>
+
+      <div class="site-card-grid">
+        {
+          sites.items.map((item) => (
+            <a class="friend-card" href={item.href} target="_blank" rel="noreferrer">
+              {item.avatar ? (
+                <img class="friend-avatar" src={item.avatar} alt={item.avatarAlt ?? item.name} />
+              ) : (
+                <span class="friend-avatar friend-avatar-mark" aria-hidden="true">{item.mark}</span>
+              )}
+              <span class="friend-content">
+                <span class="friend-name">{item.name}</span>
+                <span class="friend-desc">{item.description}</span>
+              </span>
+              <span class="friend-arrow" aria-hidden="true">→</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</SiteLayout>

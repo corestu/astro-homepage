@@ -1,0 +1,19 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import AboutContent from "../content/about.md";
+import { siteConfig } from "../config/site";
+---
+
+<SiteLayout
+  title={`关于我 - ${siteConfig.meta.title}`}
+  description={siteConfig.meta.description}
+  currentPath="/about"
+>
+  <main class="page-main">
+    <section class="article-page anchor-section" id="about-page" aria-label="关于我">
+      <article class="article-content">
+        <AboutContent />
+      </article>
+    </section>
+  </main>
+</SiteLayout>
