@@ -4,6 +4,10 @@
 
 **作者：摸鱼大王** | **博客：[摸鱼小窝](https://blog.aistu.cn)**
 
+## 演示站点
+
+**[查看演示](https://corestu.github.io)** - 使用本模板构建的个人主页
+
 ## 功能特点
 
 - **文章系统** - 支持最新文章、精选文章展示，自动从 RSS 源获取
@@ -26,8 +30,8 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/corestu/corestuhome.git
-cd corestuhome
+git clone https://github.com/corestu/astro-homepage.git
+cd astro-homepage
 ```
 
 ### 2. 安装依赖
@@ -54,7 +58,7 @@ npm run preview
 ## 项目结构
 
 ```
-corestuhome/
+astro-homepage/
 ├── public/                # 静态资源（图标、图片等）
 ├── src/
 │   ├── components/        # Astro 组件
@@ -105,6 +109,7 @@ export const siteConfig = {
 
 ## 相关链接
 
+- **演示站点**：[corestu.github.io](https://corestu.github.io) - 使用本模板构建的个人主页
 - **作者博客**：[摸鱼小窝](https://blog.aistu.cn)
 - **Astro 官方文档**：[docs.astro.build](https://docs.astro.build/)
 
