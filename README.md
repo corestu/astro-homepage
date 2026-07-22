@@ -2,8 +2,6 @@
 
 基于 Astro 构建的个人主页模板，支持文章、项目展示、站点导航等功能。简单易用，适合快速搭建个人主页和博客。
 
-**作者：摸鱼大王** | **博客：[摸鱼小窝](https://blog.aistu.cn)**
-
 ## 演示站点
 
 **[查看演示](https://corestu.github.io)** - 使用本模板构建的个人主页
@@ -110,9 +108,10 @@ export const siteConfig = {
 ## 相关链接
 
 - **演示站点**：[corestu.github.io](https://corestu.github.io) - 使用本模板构建的个人主页
-- **作者博客**：[摸鱼小窝](https://blog.aistu.cn)
 - **Astro 官方文档**：[docs.astro.build](https://docs.astro.build/)
 
-## 许可证
+## 作者
 
-MIT License © 摸鱼大王
+**摸鱼大王** | [摸鱼小窝](https://blog.aistu.cn) | [GitHub](https://github.com/corestu)
+
+MIT License
