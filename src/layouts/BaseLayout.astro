@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import { siteConfig } from "../config/site";
 
 type Props = {
   title: string;
@@ -8,7 +9,8 @@ type Props = {
   favicon?: string;
 };
 
-const { title, description = "", favicon } = Astro.props;
+const { title, description = siteConfig.meta.description, favicon } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.meta.siteUrl);
 ---
 
 <!doctype html>
@@ -17,7 +19,38 @@ const { title, description = "", favicon } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(siteConfig.meta.ogImage, siteConfig.meta.siteUrl)} />
+    <meta property="og:site_name" content={siteConfig.meta.title} />
+    <meta property="og:locale" content="zh_CN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(siteConfig.meta.ogImage, siteConfig.meta.siteUrl)} />
+
     {favicon && <link rel="icon" href={favicon} />}
+
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": siteConfig.intro.name,
+      "url": siteConfig.meta.siteUrl,
+      "image": new URL(siteConfig.intro.avatar, siteConfig.meta.siteUrl),
+      "description": siteConfig.intro.bio,
+      "sameAs": siteConfig.intro.contacts
+        .filter(c => c.type === "link" && c.href.startsWith("http"))
+        .map(c => c.href)
+    })} />
     <script is:inline>
       (() => {
         const storageKey = "site-theme";

@@ -53,7 +53,9 @@ export const siteConfig = {
   meta: {
     title: "个人主页模板",
     description: "一份基于 Astro 的个人主页模板示例，可用于展示简介、文章、项目与站点信息。",
-    favicon: "/favicon.ico"
+    favicon: "/favicon.ico",
+    siteUrl: "https://example.com",
+    ogImage: "/avatar.jpg"
   },
   brand: {
     logoMark: "H",
