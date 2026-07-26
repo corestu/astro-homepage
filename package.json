@@ -3,6 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "ensure-config": "node -e \"const f=require('fs');f.existsSync('src/config/site.ts')||f.copyFileSync('src/config/site.example.ts','src/config/site.ts')\"",
+    "predev": "npm run ensure-config",
+    "prebuild": "npm run ensure-config",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",

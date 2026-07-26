@@ -60,7 +60,7 @@ astro-homepage/
 ├── public/                # 静态资源（图标、图片等）
 ├── src/
 │   ├── components/        # Astro 组件
-│   ├── config/           # 站点配置（site.ts）
+│   ├── config/           # 站点配置（site.example.ts → 复制为 site.ts）
 │   ├── content/          # MDX 文章内容
 │   ├── layouts/          # 页面布局
 │   ├── lib/              # 工具函数
@@ -71,7 +71,7 @@ astro-homepage/
 
 ## 自定义配置
 
-编辑 `src/config/site.ts` 修改站点信息：
+首次使用时，将 `src/config/site.example.ts` 复制为 `src/config/site.ts` 后编辑（运行 `npm run dev` / `npm run build` 时若不存在会自动复制）。`site.ts` 已被 git 忽略，拉取模板更新时不会覆盖你的配置：
 
 ```typescript
 export const siteConfig = {
