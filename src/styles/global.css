@@ -55,6 +55,7 @@ body {
   min-height: 100vh;
   font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   color: var(--text);
+  background-attachment: fixed;
   background:
     radial-gradient(circle at 12% 14%, rgba(158, 215, 255, 0.34), transparent 30%),
     radial-gradient(circle at 86% 18%, rgba(182, 241, 210, 0.3), transparent 32%),
@@ -78,6 +79,7 @@ body {
 }
 
 html[data-theme="dark"] body {
+  background-attachment: fixed;
   background:
     radial-gradient(circle at 12% 14%, rgba(72, 139, 191, 0.24), transparent 30%),
     radial-gradient(circle at 86% 18%, rgba(73, 136, 112, 0.2), transparent 32%),
@@ -621,11 +623,16 @@ html[data-theme="dark"] .contact-popover-placeholder {
 .section-more {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.section-more-link {
+  display: inline-block;
+  color: var(--muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.section-more:hover,
-.section-more:focus-visible {
+.section-more-link:hover,
+.section-more-link:focus-visible {
   color: var(--text);
   transform: translateX(1px);
   outline: none;
@@ -949,6 +956,7 @@ html[data-theme="dark"] .friend-avatar-mark {
 
 @media (max-width: 560px) {
   body {
+    background-attachment: fixed;
     background:
       radial-gradient(circle at 8% 10%, rgba(158, 215, 255, 0.24), transparent 16%),
       radial-gradient(circle at 92% 12%, rgba(182, 241, 210, 0.22), transparent 17%),
@@ -957,6 +965,7 @@ html[data-theme="dark"] .friend-avatar-mark {
   }
 
   html[data-theme="dark"] body {
+    background-attachment: fixed;
     background:
       radial-gradient(circle at 8% 10%, rgba(72, 139, 191, 0.18), transparent 16%),
       radial-gradient(circle at 92% 12%, rgba(73, 136, 112, 0.16), transparent 17%),

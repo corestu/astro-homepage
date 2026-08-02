@@ -84,8 +84,9 @@ export const siteConfig = {
   },
   latestPosts: {
     title: "最新文章",
-    moreText: "查看更多→",
+    moreText: "前往",
     moreHref: "https://example.com/",
+    moreBlogName: "摸鱼小窝",
     feed: {
       url: "https://example.com/feed",
       count: 5

@@ -65,9 +65,12 @@ const latestPostItems = await loadFeedPosts(latestPosts.feed, latestPosts.fallba
     <section class="posts-section anchor-section" id="posts" aria-labelledby="posts-title">
       <div class="section-heading">
         <h2 class="section-title" id="posts-title">{latestPosts.title}</h2>
-        <a class="section-more" href={latestPosts.moreHref} target="_blank" rel="noreferrer">
+        <span class="section-more">
           {latestPosts.moreText}
-        </a>
+          <a class="section-more-link" href={latestPosts.moreHref} target="_blank" rel="noreferrer">
+            {latestPosts.moreBlogName}
+          </a>
+        </span>
       </div>
 
       <div
