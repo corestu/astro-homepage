@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "ensure-config": "node -e \"const f=require('fs');f.existsSync('src/config/site.ts')||f.copyFileSync('src/config/site.example.ts','src/config/site.ts')\"",
+    "ensure-config": "node -e \"const f=require('fs');f.existsSync('src/config/site.ts')||f.copyFileSync('src/config/site.example.ts','src/config/site.ts');f.existsSync('src/content/about.md')||f.copyFileSync('src/content/about.example.md','src/content/about.md');f.existsSync('public/avatar.jpg')||f.copyFileSync('public/avatar.example.jpg','public/avatar.jpg');f.existsSync('public/favicon.ico')||f.copyFileSync('public/favicon.example.ico','public/favicon.ico');f.existsSync('public/Corestu.svg')||f.copyFileSync('public/Corestu.example.svg','public/Corestu.svg');f.existsSync('public/theme.svg')||f.copyFileSync('public/theme.example.svg','public/theme.svg')\"",
     "predev": "npm run ensure-config",
     "prebuild": "npm run ensure-config",
     "dev": "astro dev",
