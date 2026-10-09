@@ -112,6 +112,6 @@ export const siteConfig = {
 
 ## 作者
 
-**摸鱼大王** | [摸鱼小窝](https://blog.aistu.cn) | [GitHub](https://github.com/corestu)
+**摸鱼大王** | [摸鱼小窝](https://moyu.blog) | [GitHub](https://github.com/corestu)
 
 MIT License
